@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionnaire MULTISENS Thérapies VR</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .section {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #34495e;
+        }
+        .row {
+            display: flex;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .label {
+            width: 200px;
+            margin-right: 10px;
+        }
+        .rating {
+            display: flex;
+            gap: 10px;
+        }
+        .rating-item {
+            display: flex;
+            align-items: center;
+        }
+        input[type="text"], input[type="number"], input[type="date"], input[type="email"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+        .submit-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto 0;
+            transition: background-color 0.3s;
+        }
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+        .patient-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .patient-info-item {
+            flex: 1;
+            min-width: 200px;
+        }
+        .required {
+            color: #e74c3c;
+        }
+        .add-patient-btn {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        .add-patient-btn:hover {
+            background-color: #27ae60;
+        }
+        .patient-forms {
+            margin-bottom: 30px;
+        }
+        #patientFormContainer {
+            border-top: 2px dashed #ccc;
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+        .patient-form {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .remove-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: auto;
+            transition: background-color 0.3s;
+        }
+        .remove-btn:hover {
+            background-color: #c0392b;
+        }
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        @media (max-width: 600px) {
+            .row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .label {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            .rating {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Questionnaire AVANT la Séance MULTISENS Thérapies VR</h1>
+        
+        <form id="multisensForm" action="https://formsubmit.co/jl.monie56@gmail.com" method="POST">
+            <input type="hidden" name="_subject" value="Nouveau formulaire MULTISENS Thérapies VR">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_next" value="https://www.multisenstherapies.com/merci">
+            
+            <div id="patientFormContainer">
+                <!-- Les formulaires des patients seront ajoutés ici -->
+            </div>
+            
+            <button type="button" id="addPatientBtn" class="add-patient-btn">+ Ajouter un nouveau patient</button>
+            
+            <button type="submit" class="submit-btn">Envoyer le formulaire</button>
+        </form>
+    </div>
+
+    <template id="patientFormTemplate">
+        <div class="patient-form">
+            <div class="form-header">
+                <h3>Patient <span class="patient-number"></span></h3>
+                <button type="button" class="remove-btn">Supprimer</button>
+            </div>
+            
+            <div class="patient-info">
+                <div class="patient-info-item">
+                    <label for="nom-INDEX">Nom <span class="required">*</span></label>
+                    <input type="text" id="nom-INDEX" name="patient-INDEX-nom" required>
+                </div>
+                <div class="patient-info-item">
+                    <label for="date-INDEX">Date <span class="required">*</span></label>
+                    <input type="date" id="date-INDEX" name="patient-INDEX-date" required>
+                </div>
+                <div class="patient-info-item">
+                    <label for="age-INDEX">Âge (ans)</label>
+                    <input type="number" id="age-INDEX" name="patient-INDEX-age" min="0" max="120">
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">1. État général</div>
+                
+                <div class="row">
+                    <div class="label">Niveau de fatigue :</div>
+                    <div class="rating">
+                        <div class="rating-item"><input type="radio" id="fatigue-1-INDEX" name="patient-INDEX-fatigue" value="1"><label for="fatigue-1-INDEX">1</label></div>
+                        <div class="rating-item"><input type="radio" id="fatigue-2-INDEX" name="patient-INDEX-fatigue" value="2"><label for="fatigue-2-INDEX">2</label></div>
+                        <div class="rating-item"><input type="radio" id="fatigue-3-INDEX" name="patient-INDEX-fatigue" value="3"><label for="fatigue-3-INDEX">3</label></div>
+                        <div class="rating-item"><input type="radio" id="fatigue-4-INDEX" name="patient-INDEX-fatigue" value="4"><label for="fatigue-4-INDEX">4</label></div>
+                        <div class="rating-item"><input type="radio" id="fatigue-5-INDEX" name="patient-INDEX-fatigue" value="5"><label for="fatigue-5-INDEX">5</label></div>
+                        <div class="rating-item"><input type="radio" id="fatigue-6-INDEX" name="patient-INDEX-fatigue" value="6"><label for="fatigue-6-INDEX">6</label></div>
+                        <div class="rating-item"><input type="radio" id="fatigue-7-INDEX" name="patient-INDEX-fatigue" value="7"><label for="fatigue-7-INDEX">7</label></div>
+                        <div class="rating-item"><input type="radio" id="fatigue-8-INDEX" name="patient-INDEX-fatigue" value="8"><label for="fatigue-8-INDEX">8</label></div>
+                        <div class="rating-item"><input type="radio" id="fatigue-9-INDEX" name="patient-INDEX-fatigue" value="9"><label for="fatigue-9-INDEX">9</label></div>
+                        <div class="rating-item"><input type="radio" id="fatigue-10-INDEX" name="patient-INDEX-fatigue" value="10"><label for="fatigue-10-INDEX">10</label></div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="label">Niveau de stress actuel :</div>
+                    <div class="rating">
+                        <div class="rating-item"><input type="radio" id="stress-1-INDEX" name="patient-INDEX-stress" value="1"><label for="stress-1-INDEX">1</label></div>
+                        <div class="rating-item"><input type="radio" id="stress-2-INDEX" name="patient-INDEX-stress" value="2"><label for="stress-2-INDEX">2</label></div>
+                        <div class="rating-item"><input type="radio" id="stress-3-INDEX" name="patient-INDEX-stress" value="3"><label for="stress-3-INDEX">3</label></div>
+                        <div class="rating-item"><input type="radio" id="stress-4-INDEX" name="patient-INDEX-stress" value="4"><label for="stress-4-INDEX">4</label></div>
+                        <div class="rating-item"><input type="radio" id="stress-5-INDEX" name="patient-INDEX-stress" value="5"><label for="stress-5-INDEX">5</label></div>
+                        <div class="rating-item"><input type="radio" id="stress-6-INDEX" name="patient-INDEX-stress" value="6"><label for="stress-6-INDEX">6</label></div>
+                        <div class="rating-item"><input type="radio" id="stress-7-INDEX" name="patient-INDEX-stress" value="7"><label for="stress-7-INDEX">7</label></div>
+                        <div class="rating-item"><input type="radio" id="stress-8-INDEX" name="patient-INDEX-stress" value="8"><label for="stress-8-INDEX">8</label></div>
+                        <div class="rating-item"><input type="radio" id="stress-9-INDEX" name="patient-INDEX-stress" value="9"><label for="stress-9-INDEX">9</label></div>
+                        <div class="rating-item"><input type="radio" id="stress-10-INDEX" name="patient-INDEX-stress" value="10"><label for="stress-10-INDEX">10</label></div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="label">Douleur ressentie actuellement :</div>
+                    <div class="rating">
+                        <div class="rating-item"><input type="radio" id="douleur-1-INDEX" name="patient-INDEX-douleur" value="1"><label for="douleur-1-INDEX">1</label></div>
+                        <div class="rating-item"><input type="radio" id="douleur-2-INDEX" name="patient-INDEX-douleur" value="2"><label for="douleur-2-INDEX">2</label></div>
+                        <div class="rating-item"><input type="radio" id="douleur-3-INDEX" name="patient-INDEX-douleur" value="3"><label for="douleur-3-INDEX">3</label></div>
+                        <div class="rating-item"><input type="radio" id="douleur-4-INDEX" name="patient-INDEX-douleur" value="4"><label for="douleur-4-INDEX">4</label></div>
+                        <div class="rating-item"><input type="radio" id="douleur-5-INDEX" name="patient-INDEX-douleur" value="5"><label for="douleur-5-INDEX">5</label></div>
+                        <div class="rating-item"><input type="radio" id="douleur-6-INDEX" name="patient-INDEX-douleur" value="6"><label for="douleur-6-INDEX">6</label></div>
+                        <div class="rating-item"><input type="radio" id="douleur-7-INDEX" name="patient-INDEX-douleur" value="7"><label for="douleur-7-INDEX">7</label></div>
+                        <div class="rating-item"><input type="radio" id="douleur-8-INDEX" name="patient-INDEX-douleur" value="8"><label for="douleur-8-INDEX">8</label></div>
+                        <div class="rating-item"><input type="radio" id="douleur-9-INDEX" name="patient-INDEX-douleur" value="9"><label for="douleur-9-INDEX">9</label></div>
+                        <div class="rating-item"><input type="radio" id="douleur-10-INDEX" name="patient-INDEX-douleur" value="10"><label for="douleur-10-INDEX">10</label></div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="label">➜ Localisation :</div>
+                    <input type="text" id="localisation-INDEX" name="patient-INDEX-localisation-douleur">
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">2. Connaissance / Sensibilité à la réalité virtuelle</div>
+                
+                <div class="row">
+                    <div class="label">Avez-vous déjà essayé un casque VR ?</div>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="radio" id="vr-oui-INDEX" name="patient-INDEX-experience-vr" value="Oui">
+                            <label for="vr-oui-INDEX">Oui</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="radio" id="vr-non-INDEX" name="patient-INDEX-experience-vr" value="Non">
+                            <label for="vr-non-INDEX">Non</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="label">Sensibilité connue (nausée, vertige) :</div>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="radio" id="sensibilite-oui-INDEX" name="patient-INDEX-sensibilite" value="Oui">
+                            <label for="sensibilite-oui-INDEX">Oui</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="radio" id="sensibilite-non-INDEX" name="patient-INDEX-sensibilite" value="Non">
+                            <label for="sensibilite-non-INDEX">Non</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="label">➜ Précisez :</div>
+                    <input type="text" id="sensibilite-precisions-INDEX" name="patient-INDEX-sensibilite-precisions">
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">3. Attentes pour cette séance</div>
+                <div class="row">
+                    <div class="label">Je souhaite :</div>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="attente-detente-INDEX" name="patient-INDEX-attente-detente" value="Me détendre">
+                            <label for="attente-detente-INDEX">Me détendre</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="attente-douleur-INDEX" name="patient-INDEX-attente-douleur" value="Réduire mes douleurs">
+                            <label for="attente-douleur-INDEX">Réduire mes douleurs</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="attente-evasion-INDEX" name="patient-INDEX-attente-evasion" value="M'évader mentalement">
+                            <label for="attente-evasion-INDEX">M'évader mentalement</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="attente-stimulation-INDEX" name="patient-INDEX-attente-stimulation" value="Stimuler mes sens">
+                            <label for="attente-stimulation-INDEX">Stimuler mes sens</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="label">Autre attente :</div>
+                    <input type="text" id="attente-autre-INDEX" name="patient-INDEX-attente-autre">
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">4. Préférences sensorielles (si connues)</div>
+                
+                <div class="row">
+                    <div class="label">Type d'environnement souhaité :</div>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="radio" id="env-nature-INDEX" name="patient-INDEX-environnement" value="Nature">
+                            <label for="env-nature-INDEX">Nature</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="radio" id="env-mer-INDEX" name="patient-INDEX-environnement" value="Mer">
+                            <label for="env-mer-INDEX">Mer</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="radio" id="env-montagne-INDEX" name="patient-INDEX-environnement" value="Montagne">
+                            <label for="env-montagne-INDEX">Montagne</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="radio" id="env-autre-INDEX" name="patient-INDEX-environnement" value="Autre">
+                            <label for="env-autre-INDEX">Autre</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="label">Précisez l'environnement :</div>
+                    <input type="text" id="environnement-autre-INDEX" name="patient-INDEX-environnement-autre">
+                </div>
+                
+                <div class="row">
+                    <div class="label">Sons appréciés :</div>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="radio" id="son-musique-INDEX" name="patient-INDEX-sons" value="Musique douce">
+                            <label for="son-musique-INDEX">Musique douce</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="radio" id="son-nature-INDEX" name="patient-INDEX-sons" value="Nature">
+                            <label for="son-nature-INDEX">Nature</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="radio" id="son-zen-INDEX" name="patient-INDEX-sons" value="Ambiance zen">
+                            <label for="son-zen-INDEX">Ambiance zen</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="radio" id="son-autre-INDEX" name="patient-INDEX-sons" value="Autre">
+                            <label for="son-autre-INDEX">Autre</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="label">Précisez le son :</div>
+                    <input type="text" id="son-autre-precisions-INDEX" name="patient-INDEX-sons-autre">
+                </div>
+                
+                <div class="row">
+                    <div class="label">Sensibilité aux odeurs :</div>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="radio" id="odeur-oui-INDEX" name="patient-INDEX-sensibilite-odeurs" value="Oui">
+                            <label for="odeur-oui-INDEX">Oui</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="radio" id="odeur-non-INDEX" name="patient-INDEX-sensibilite-odeurs" value="Non">
+                            <label for="odeur-non-INDEX">Non</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="label">Préférence d'odeur :</div>
+                    <input type="text" id="preference-odeur-INDEX" name="patient-INDEX-preference-odeur">
+                </div>
+                
+                <div class="row">
+                    <div class="label">Zones du corps sensibles au massage :</div>
+                    <input type="text" id="zones-massage-INDEX" name="patient-INDEX-zones-massage">
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const patientFormContainer = document.getElementById('patientFormContainer');
+            const addPatientBtn = document.getElementById('addPatientBtn');
+            const patientFormTemplate = document.getElementById('patientFormTemplate').content;
+            let patientCount = 0;
+            
+            // Fonction pour ajouter un nouveau formulaire patient
+            function addPatientForm() {
+                patientCount++;
+                
+                // Cloner le template
+                const newForm = document.importNode(patientFormTemplate, true);
+                
+                // Mettre à jour l'index dans tous les ID et noms
+                replaceIndex(newForm, 'INDEX', patientCount);
+                
+                // Mettre à jour le numéro du patient
+                newForm.querySelector('.patient-number').textContent = patientCount;
+                
+                // Ajouter le gestionnaire d'événement pour le bouton de suppression
+                const removeBtn = newForm.querySelector('.remove-btn');
+                removeBtn.addEventListener('click', function() {
+                    const patientForm = this.closest('.patient-form');
+                    patientForm.remove();
+                    updatePatientNumbers();
+                });
+                
+                // Ajouter le formulaire au conteneur
+                patientFormContainer.appendChild(newForm);
+            }
+            
+            // Fonction pour remplacer toutes les occurrences de placeholder par value
+            function replaceIndex(element, placeholder, value) {
+                const allElements = element.querySelectorAll('*');
+                allElements.forEach(el => {
+                    // Remplacer les ID
+                    if (el.id && el.id.includes(placeholder)) {
+                        el.id = el.id.replace(placeholder, value);
+                    }
+                    
+                    // Remplacer les attributs name
+                    if (el.hasAttribute('name') && el.getAttribute('name').includes(placeholder)) {
+                        el.setAttribute('name', el.getAttribute('name').replace(placeholder, value));
+                    }
+                    
+                    // Remplacer les attributs for des labels
+                    if (el.hasAttribute('for') && el.getAttribute('for').includes(placeholder)) {
+                        el.setAttribute('for', el.getAttribute('for').replace(placeholder, value));
+                    }
+                });
+            }
+            
+            // Fonction pour mettre à jour les numéros de patient après suppression
+            function updatePatientNumbers() {
+                const patientForms = document.querySelectorAll('.patient-form');
+                patientForms.forEach((form, index) => {
+                    form.querySelector('.patient-number').textContent = index + 1;
+                });
+            }
+            
+            // Ajouter un patient au chargement
+            addPatientForm();
+            
+            // Gestionnaire d'événement pour le bouton d'ajout de patient
+            addPatientBtn.addEventListener('click', addPatientForm);
+            
+            // Valider le formulaire avant l'envoi
+            document.getElementById('multisensForm').addEventListener('submit', function(e) {
+                const patientForms = document.querySelectorAll('.patient-form');
+                if (patientForms.length === 0) {
+                    e.preventDefault();
+                    alert('Veuillez ajouter au moins un patient avant de soumettre le formulaire.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
